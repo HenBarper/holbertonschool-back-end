@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """extend your script to export data in CSV"""
+import csv
 import requests
 import sys
-import csv
 
 
 def export_to_csv():
@@ -21,7 +21,8 @@ def export_to_csv():
     f = open('{}.csv'.format(employee_id), 'w')
     writer = csv.writer(f, quoting=csv.QUOTE_ALL)
     for item in todo_data:
-        writer.writerow((employee_id, EMPLOYEE_NAME, item.get("completed"), item.get("title")))
+        writer.writerow((employee_id, EMPLOYEE_NAME,
+                         item.get("completed"), item.get("title")))
 
     f.close()
 
