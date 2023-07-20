@@ -10,21 +10,19 @@ def export_to_csv():
     if(len(sys.argv) != 2):
         print("Error not 3 commands")
 
-    employee_id = sys.argv[1]
+    USER_ID = sys.argv[1]
 
     user_data = requests.get('https://jsonplaceholder.typicode.com/users/{}'
-                             .format(employee_id)).json()
+                             .format(USER_ID)).json()
     todo_data = requests.get('https://jsonplaceholder.typicode.com/todos',
-                             params={"userId": employee_id}).json()
+                             params={"userId": USER_ID}).json()
     EMPLOYEE_NAME = user_data.get("username")
 
-    f = open('{}.csv'.format(employee_id), 'w')
-    writer = csv.writer(f, quoting=csv.QUOTE_ALL)
-    for item in todo_data:
-        writer.writerow((employee_id, EMPLOYEE_NAME,
-                         item.get("completed"), item.get("title")))
-
-    f.close()
+    with open('{}.csv'.format(USER_ID), 'w') as f:
+        writer = csv.writer(f, quoting=csv.QUOTE_ALL)
+        for item in todo_data:
+            writer.writerow((USER_ID, EMPLOYEE_NAME,
+                            item.get("completed"), item.get("title")))
 
 
 if __name__ == "__main__":
