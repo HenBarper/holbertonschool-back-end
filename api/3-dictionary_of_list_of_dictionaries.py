@@ -43,7 +43,7 @@ def record_all_tasks():
                     "completed": complete_status_list[i],
             }
             json_list.append(new_dict)
-        json_dict[f'{counter}'] = json_list
+        json_dict[f'{counter + 1}'] = json_list
         counter += 1
 
     json_object = json.dumps(json_dict)
