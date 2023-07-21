@@ -6,7 +6,7 @@ import sys
 
 
 def export_user_to_json():
-    """export user data to json format"""
+    """export user id data to json format"""
     if(len(sys.argv) != 2):
         print("Error not 3 commands")
 
