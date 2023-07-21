@@ -29,12 +29,30 @@ def export_user_to_json():
             NUMBER_OF_DONE_TASKS += 1
             completed_tasks.append(item.get("title"))
 
+    # { "USER_ID": [{"task": "TASK_TITLE", "completed": TASK_COMPLETED_STATUS, "username": "USERNAME"}, {"task": "TASK_TITLE", "completed": TASK_COMPLETED_STATUS, "username": "USERNAME"}, ... ]}
+    task_list = []
+    complete_status_list = []
+    for thing in todo_data:
+        task_list.append(item.get("title"))
+        complete_status_list.append(item.get("completed"))
+
+    json_list = []
+    for i in range(len(task_list)):
+        new_dict = {
+            "task": task_list[i],
+            "completed": complete_status_list[i],
+            "username": EMPLOYEE_UN
+        }
+        json_list.append(new_dict)
+
+    json_dict = {
+        f"{USER_ID}": json_list
+    }
+
+    json_object = json.dumps(json_dict)
+
     with open('{}.json'.format(USER_ID), 'w') as f:
-        # writer = csv.writer(f)
-        for item in todo_data:
-            # writer.writerow((USER_ID, EMPLOYEE_UN,
-            # item.get("completed"), item.get("title")))
-            pass
+        f.write(json_object)
 
     print('Employee {} is done with tasks({}/{}):'
           .format(EMPLOYEE_NAME, NUMBER_OF_DONE_TASKS, TOTAL_NUMBER_OF_TASKS))
