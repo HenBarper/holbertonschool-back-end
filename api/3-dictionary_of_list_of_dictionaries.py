@@ -34,15 +34,17 @@ def record_all_tasks():
 
     json_dict = {}
     counter = 0
+    total_counter = 0
     for each in todo_list:
         json_list = []
-        for i in range(len(todo_list)):
+        for i in range(len(todo_list[counter])):
             new_dict = {
                     "username": username_list[counter],
-                    "task": task_list[i],
-                    "completed": complete_status_list[i],
+                    "task": task_list[total_counter],
+                    "completed": complete_status_list[total_counter],
             }
             json_list.append(new_dict)
+            total_counter += 1
         json_dict[f'{counter + 1}'] = json_list
         counter += 1
 
