@@ -6,58 +6,60 @@ import sys
 
 def record_all_tasks():
     """gather and print api data"""
-    if(len(sys.argv) != 2):
-        print("Error not 3 commands")
 
-    USER_ID = sys.argv[1]
-
-    user_data = requests.get('https://jsonplaceholder.typicode.com/users/{}'
-                             .format(USER_ID)).json()
-    todo_data = requests.get('https://jsonplaceholder.typicode.com/todos',
-                             params={"userId": USER_ID}).json()
-    EMPLOYEE_UN = user_data.get("username")
-    EMPLOYEE_NAME = user_data.get("name")
-    NUMBER_OF_DONE_TASKS = 0
-    TOTAL_NUMBER_OF_TASKS = 0
-
-    completed_tasks = []
-
-    for item in todo_data:
-        TOTAL_NUMBER_OF_TASKS += 1
-        if item.get("completed"):
-            NUMBER_OF_DONE_TASKS += 1
-            completed_tasks.append(item.get("title"))
+    todo_data = requests.get('https://jsonplaceholder.typicode.com/todos').json()
 
     counter = 0
-    task_list = []
-    complete_status_list = []
+    # id_list = []
+    # task_list = []
+    # complete_status_list = []
+    # username_list = []
     for thing in todo_data:
-        counter += 1
-        task_list.append(thing.get("title"))
-        complete_status_list.append(thing.get("completed"))
+        if thing.get("userId") > counter:
+            counter += 1
+        # id_list.append(counter)
+        # task_list.append(thing.get("title"))
+        # complete_status_list.append(thing.get("completed"))
+        # username_list.append(thing.get("username"))
+    
+    todo_list = []
+    for i in range(1, counter):
+        todo_list.append(requests.get('https://jsonplaceholder.typicode.com/todos',
+                             params={"userId": i}).json())
 
-    json_list = []
-    for i in range(counter):
+    for i in range(len(todo_list)):
+        json_list = []
         new_dict = {
-            "task": task_list[i],
-            "completed": complete_status_list[i],
-            "username": EMPLOYEE_UN
-        }
+                "username": username_list[j],
+                "task": task_list[j],
+                "completed": complete_status_list[j],
+            }
         json_list.append(new_dict)
-
-    json_dict = {
+        json_dict = {
         f"{USER_ID}": json_list
-    }
+        }
+            
 
-    json_object = json.dumps(json_dict)
+    # for i in range(len(todo_list)):
+    #     print(todo_list[i])
 
-    with open('todo_all_employees.json', 'w') as f:
-        f.write(json_object)
+    # for j in range(id_list):
+    #     json_dict = {
+    #         f"{id_list[j]}": 
+    #     }
+    # json_list = []
+    # for i in range(counter):
+    #     new_dict = {
+    #         "username": username_list[i],
+    #         "task": task_list[i],
+    #         "completed": complete_status_list[i],
+    #     }
+    #     json_list.append(new_dict)
 
-    print('Employee {} is done with tasks({}/{}):'
-          .format(EMPLOYEE_NAME, NUMBER_OF_DONE_TASKS, TOTAL_NUMBER_OF_TASKS))
-    for task in completed_tasks:
-        print("\t {}".format(task))
+    # json_object = json.dumps(json_dict)
+
+    # with open('todo_all_employees.json', 'w') as f:
+    #     f.write(json_object)
 
 
 if __name__ == "__main__":
