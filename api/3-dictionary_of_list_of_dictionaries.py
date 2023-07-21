@@ -15,44 +15,35 @@ def record_all_tasks():
     task_list = []
     complete_status_list = []
     username_list = []
-    for thing in todo_data:
-        if thing.get("userId") > counter:
+
+    for item in user_data:
+        username_list.append(item.get("username"))
+
+    for item in todo_data:
+        if item.get("userId") > counter:
             counter += 1
-        task_list.append(thing.get("title"))
-        complete_status_list.append(thing.get("completed"))
-        username_list.append(thing.get("username"))
+        task_list.append(item.get("title"))
+        complete_status_list.append(item.get("completed"))
+
     
     todo_list = []
-    for i in range(1, counter):
+    for i in range(1, counter + 1):
         todo_list.append(requests.get('https://jsonplaceholder.typicode.com/todos',
                              params={"userId": i}).json())
 
     json_dict = {}
-    for i in range(len(todo_list)):
+    counter = 0
+    for each in todo_list:
         json_list = []
-        new_dict = {
-                "username": username_list[i],
-                "task": task_list[i],
-                "completed": complete_status_list[i],
+        for i in range(len(todo_list)):
+            new_dict = {
+                    "username": username_list[counter],
+                    "task": task_list[i],
+                    "completed": complete_status_list[i],
             }
-        json_list.append(new_dict)
-        json_dict[f'{i}'] = json_list            
-
-    # for i in range(len(todo_list)):
-    #     print(todo_list[i])
-
-    # for j in range(id_list):
-    #     json_dict = {
-    #         f"{id_list[j]}": 
-    #     }
-    # json_list = []
-    # for i in range(counter):
-    #     new_dict = {
-    #         "username": username_list[i],
-    #         "task": task_list[i],
-    #         "completed": complete_status_list[i],
-    #     }
-    #     json_list.append(new_dict)
+            json_list.append(new_dict)
+        json_dict[f'{counter}'] = json_list
+        counter += 1
 
     json_object = json.dumps(json_dict)
 
