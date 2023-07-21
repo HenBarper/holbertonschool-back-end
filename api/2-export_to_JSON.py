@@ -7,9 +7,6 @@ import sys
 
 def export_user_to_json():
     """export user id data to json format"""
-    if(len(sys.argv) != 2):
-        print("Usage: {} <USER_ID>".format(sys.argv[0]))
-        sys.exit(1)
 
     USER_ID = sys.argv[1]
 
