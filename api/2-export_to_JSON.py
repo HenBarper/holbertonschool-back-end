@@ -29,14 +29,16 @@ def export_user_to_json():
             NUMBER_OF_DONE_TASKS += 1
             completed_tasks.append(item.get("title"))
 
+    counter = 0
     task_list = []
     complete_status_list = []
     for thing in todo_data:
-        task_list.append(item.get("title"))
-        complete_status_list.append(item.get("completed"))
+        counter += 1
+        task_list.append(thing.get("title"))
+        complete_status_list.append(thing.get("completed"))
 
     json_list = []
-    for i in range(len(task_list)):
+    for i in range(counter):
         new_dict = {
             "task": task_list[i],
             "completed": complete_status_list[i],
