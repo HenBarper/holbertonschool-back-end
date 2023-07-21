@@ -29,7 +29,6 @@ def export_user_to_json():
             NUMBER_OF_DONE_TASKS += 1
             completed_tasks.append(item.get("title"))
 
-    # { "USER_ID": [{"task": "TASK_TITLE", "completed": TASK_COMPLETED_STATUS, "username": "USERNAME"}, {"task": "TASK_TITLE", "completed": TASK_COMPLETED_STATUS, "username": "USERNAME"}, ... ]}
     task_list = []
     complete_status_list = []
     for thing in todo_data:
