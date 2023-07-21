@@ -1,12 +1,11 @@
 #!/usr/bin/python3
-""" Export to JSON """
-import json
+""" Dictionary of list of dictionaries """
 import requests
 import sys
 
 
-def export_user_to_json():
-    """export user id data to json format"""
+def record_all_tasks():
+    """gather and print api data"""
     if(len(sys.argv) != 2):
         print("Error not 3 commands")
 
@@ -18,6 +17,16 @@ def export_user_to_json():
                              params={"userId": USER_ID}).json()
     EMPLOYEE_UN = user_data.get("username")
     EMPLOYEE_NAME = user_data.get("name")
+    NUMBER_OF_DONE_TASKS = 0
+    TOTAL_NUMBER_OF_TASKS = 0
+
+    completed_tasks = []
+
+    for item in todo_data:
+        TOTAL_NUMBER_OF_TASKS += 1
+        if item.get("completed"):
+            NUMBER_OF_DONE_TASKS += 1
+            completed_tasks.append(item.get("title"))
 
     counter = 0
     task_list = []
@@ -42,9 +51,14 @@ def export_user_to_json():
 
     json_object = json.dumps(json_dict)
 
-    with open('{}.json'.format(USER_ID), 'w') as f:
+    with open('todo_all_employees.json', 'w') as f:
         f.write(json_object)
+
+    print('Employee {} is done with tasks({}/{}):'
+          .format(EMPLOYEE_NAME, NUMBER_OF_DONE_TASKS, TOTAL_NUMBER_OF_TASKS))
+    for task in completed_tasks:
+        print("\t {}".format(task))
 
 
 if __name__ == "__main__":
-    export_user_to_json()
+    record_all_tasks()
