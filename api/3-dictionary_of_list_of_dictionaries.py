@@ -7,9 +7,11 @@ import sys
 
 def record_all_tasks():
     """gather and print api data"""
-
-    user_data = requests.get('https://jsonplaceholder.typicode.com/users').json()
-    todo_data = requests.get('https://jsonplaceholder.typicode.com/todos').json()
+    url = "https://jsonplaceholder.typicode.com"
+    user_url = f"{url}/users"
+    todo_url = f"{url}/todos"
+    user_data = requests.get(user_url).json()
+    todo_data = requests.get(todo_url).json()
 
     counter = 0
     task_list = []
@@ -25,11 +27,10 @@ def record_all_tasks():
         task_list.append(item.get("title"))
         complete_status_list.append(item.get("completed"))
 
-    
     todo_list = []
     for i in range(1, counter + 1):
-        todo_list.append(requests.get('https://jsonplaceholder.typicode.com/todos',
-                             params={"userId": i}).json())
+        todo_list.append(requests.get(todo_url,
+                                      params={"userId": i}).json())
 
     json_dict = {}
     counter = 0
