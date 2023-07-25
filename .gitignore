@@ -6,8 +6,10 @@ __pycache__/
 # C extensions
 *.so
 
-#compiled files
+# compiled files
 *.csv
+*.json
+main.py
 
 # Distribution / packaging
 .Python
